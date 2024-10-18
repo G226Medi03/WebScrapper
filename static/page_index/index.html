@@ -1,0 +1,73 @@
+<html class="MAC SAC" style="width: 100%;">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./static/page_index/index.css" />
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  <div class="W100 WFC MAC SAC">
+    <div class="MAC" style="width: 900px;">
+      <span class="MTB_10 FS_30">
+        Weather
+      </span>
+      <div class="Row WFC WeatherCardContainer" style="overflow-x: scroll; width: inherit;"></div>
+
+      <span class="MTB_10 FS_30">
+        Stock Charts
+      </span>
+      <div id="stock_nasdaq">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </div>
+      <div id="stock_tmf">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </div>
+      <div id="stock_btc">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </div>
+      <div id="stock_oilk">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </div>
+      <div id="stock_ktG">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </div>
+
+      <span class="MTB_10 FS_30">
+        News
+      </span>
+      <div class="Row newsContainer MAC" style="flex-wrap: wrap; gap : 30px 0px; height: 952px;"></div>
+    </div>
+  </div>
+</body>
+
+<script src="./static/component_stockChart/StockChart.js"></script>
+<script type="module">
+  import updateNewsCards from "./index_news.js";
+  import updateWeatherCards from "./index_weather.js";
+  import updateStockChart from "./index_stock.js";
+  import { Define as weatherDefine } from "/static/component_weather/WeatherCard.js";
+  import { Define as newsCardDefine } from "/static/component_news/NewsCard.js";
+  import { Define as newsSectionDefine } from "/static/component_news/NewsSection.js";
+
+  weatherDefine();
+  newsCardDefine();
+  newsSectionDefine();
+  updateNewsCards();
+  updateWeatherCards();
+  updateStockChart("#stock_nasdaq", "NASDAQ");
+  updateStockChart("#stock_tmf", "TMF");
+  updateStockChart("#stock_btc", "BTC");
+  updateStockChart("#stock_oilk", "OILK");
+  updateStockChart("#stock_ktG", "KT&G");
+
+</script>
+
+<script async>
+
+
+
+
+</script>
+
+</html>
