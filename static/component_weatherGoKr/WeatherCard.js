@@ -4,10 +4,16 @@ class WeatherCard extends HTMLElement {
   }
 
   convert_weather2ImgSrc(weather) {
-    let src = `src="./static/component_weather/png/${this.getAttribute("weather")}.png"`;
-    return `<image class="W_50 MLR_5" ${weather == `-` ? `` : src}>
-                    ${weather == `-` ? `-` : ``}
-                </image>`;
+    let src = `src="./static/component_weatherGoKr/png/${this.getAttribute("weather")}.png"`;
+
+    if (weather == "-") {
+      return "-"
+    }
+    else {
+      return `<image class="W_50 MLR_5" ${src}>
+              </image>`;
+    }
+
   }
   getHtml(date, day, description, weather, lowTemp, highTemp, rainPercent) {
     date = this.getAttribute("date");
@@ -31,9 +37,8 @@ class WeatherCard extends HTMLElement {
 
     return `
             <div class="WeatherCard WFC SAC MAC" id="weatherCard" style="width : 110px">
-                <div class="WeatherCard_Head MAC W100" ${
-                  fontColor == undefined ? "" : `style="color : ${fontColor}"`
-                }>
+                <div class="WeatherCard_Head MAC W100" ${fontColor == undefined ? "" : `style="color : ${fontColor}"`
+      }>
                     <div class="SAC FS_16 H_25 FW_600 PRL_15 ">${date}일(${day})</div>
                     <div class="MAC SAC FS_14 H_20">${description}</div>
                 </div>
@@ -52,9 +57,8 @@ class WeatherCard extends HTMLElement {
                 </div>
             </div>`.replaceAll("\n", "");
   }
-  getStyle() {
-    const style = document.createElement("style");
-    style.textContent = `
+  getCss() {
+    const style = `
             .WeatherCard_Body {
               width : 100%;
               margin-top : 5px;
@@ -136,7 +140,7 @@ class WeatherCard extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `
             <style>
-                ${this.getStyle().textContent}
+                ${this.getCss()}
             </style>
             ${this.getHtml()}`;
 
@@ -162,7 +166,10 @@ class WeatherCard extends HTMLElement {
 }
 
 
-export function Define() {
+export default function Define() {
   window.customElements.define("weather-card", WeatherCard);
 
 }
+
+
+Define();

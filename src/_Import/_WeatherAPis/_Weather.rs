@@ -29,7 +29,9 @@ impl Weather {
             rainPercent: rainPercent,
         };
     }
-
+    pub fn Get_todayDate(&self) -> i8 {
+        return self.date;
+    }
     pub fn Into_Json(&self) -> serde_json::Value {
         let json = serde_json::json!({
             "date" : self.date,

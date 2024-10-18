@@ -2,71 +2,77 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./static/page_index/index.css" />
+  <link rel="stylesheet" href="/static/component.css" />
+  <script src="/static/component.js">
+  </script>
+
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 </head>
 
 <body>
   <div class="W100 WFC MAC SAC">
-    <div class="MAC" style="width: 900px;">
+    <div class="MAC SAC" style="width: 1000px;">
       <span class="MTB_10 FS_30">
         Weather
       </span>
-      <div class="Row WFC WeatherCardContainer" style="overflow-x: scroll; width: inherit;"></div>
+      <div class="Row WFC WeatherCardContainer OX_S" style="width: 100%;"></div>
 
       <span class="MTB_10 FS_30">
         Stock Charts
       </span>
-      <div id="stock_nasdaq">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <div class="Row O_F" style="padding-left: 25px;">
+        <stock-chart stock="Nasdaq" investingLink="https://kr.investing.com/etfs/powershares-qqqq-chart"
+          naverfinanceLink="https://m.stock.naver.com/fchart/foreign/stock/QQQ.O"
+          traidingviewLink="https://kr.tradingview.com/chart/?symbol=NASDAQ%3AQQQ">
+        </stock-chart>
+
+        <stock-chart stock="TMF" investingLink="https://kr.investing.com/etfs/direxion-30-yr-tr.-bull-3x-shrs-chart"
+          naverfinanceLink="https://m.stock.naver.com/fchart/foreign/stock/TMF"
+          traidingviewLink="https://www.tradingview.com/chart/?symbol=AMEX%3ATMF">
+        </stock-chart>
+
+        <stock-chart stock="BTC" investingLink="https://kr.investing.com/etfs/ibit-nasdaq-chart"
+          naverfinanceLink="https://m.stock.naver.com/fchart/foreign/stock/IBIT.O"
+          traidingviewLink="https://www.tradingview.com/chart/?symbol=NASDAQ%3AIBIT">
+        </stock-chart>
+        <stock-chart stock="OILK" investingLink="https://kr.investing.com/etfs/proshares-k1-free-crd-oil-strat-chart"
+          naverfinanceLink="https://m.stock.naver.com/fchart/foreign/stock/OILK.K"
+          traidingviewLink="https://www.tradingview.com/chart/?symbol=AMEX%3AOILK">
+        </stock-chart>
+        <stock-chart stock="KT&G" investingLink="https://kr.investing.com/equities/kt-g-corp-chart"
+          naverfinanceLink="https://m.stock.naver.com/fchart/domestic/stock/033780"
+          traidingviewLink="https://www.tradingview.com/chart/?symbol=KRX%3A033780">
+        </stock-chart>
+        <stock-chart stock="Samsung" investingLink="https://kr.investing.com/equities/samsung-electronics-co-ltd-chart"
+          naverfinanceLink="https://m.stock.naver.com/fchart/domestic/stock/005930"
+          traidingviewLink="https://www.tradingview.com/chart/?symbol=SAMSUNG">
+        </stock-chart>
+
       </div>
-      <div id="stock_tmf">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      </div>
-      <div id="stock_btc">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      </div>
-      <div id="stock_oilk">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      </div>
-      <div id="stock_ktG">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      </div>
+
+
+
+
 
       <span class="MTB_10 FS_30">
         News
       </span>
-      <div class="Row newsContainer MAC" style="flex-wrap: wrap; gap : 30px 0px; height: 952px;"></div>
+      <div class="Row newsContainer MAC O_F" style="gap : 30px 0px; height: 952px;"></div>
     </div>
   </div>
 </body>
 
-<script src="./static/component_stockChart/StockChart.js"></script>
+
 <script type="module">
   import updateNewsCards from "./index_news.js";
   import updateWeatherCards from "./index_weather.js";
-  import updateStockChart from "./index_stock.js";
-  import { Define as weatherDefine } from "/static/component_weather/WeatherCard.js";
-  import { Define as newsCardDefine } from "/static/component_news/NewsCard.js";
-  import { Define as newsSectionDefine } from "/static/component_news/NewsSection.js";
+  import _1 from "/static/component_weatherGoKr/WeatherCard.js";
+  import _2 from "/static/component_naverNews/News.js";
+  import _5 from "./StockChart.js"
 
-  weatherDefine();
-  newsCardDefine();
-  newsSectionDefine();
   updateNewsCards();
   updateWeatherCards();
-  updateStockChart("#stock_nasdaq", "NASDAQ");
-  updateStockChart("#stock_tmf", "TMF");
-  updateStockChart("#stock_btc", "BTC");
-  updateStockChart("#stock_oilk", "OILK");
-  updateStockChart("#stock_ktG", "KT&G");
-
-</script>
-
-<script async>
-
-
-
 
 </script>
 

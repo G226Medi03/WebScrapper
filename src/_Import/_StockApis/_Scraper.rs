@@ -17,6 +17,11 @@ impl Scraper {
         sEndDate: String,
     ) -> Vec<StockPrice> {
         let resp = Self::get_sHtml(&stock.To_Url(&sStartDate, &sEndDate)).await;
+
+        if stock == EStock::NASDAQ {
+            let a = 1;
+            print!("{}", a);
+        }
         let mut jResp: Value = serde_json::from_str(&resp).unwrap();
 
         let refJson = jResp.as_array_mut().unwrap();

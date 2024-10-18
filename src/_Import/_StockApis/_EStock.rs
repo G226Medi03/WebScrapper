@@ -2,13 +2,14 @@ use actix_web::web::Bytes;
 use EStock::*;
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum EStock {
     BTC,
     NASDAQ,
     TMF,
     OILK,
     KT_G,
+    Samsung,
 }
 
 impl EStock {
@@ -35,11 +36,12 @@ impl EStock {
             "TMF" => {
                 return TMF;
             }
-            "OILK" | "Oil" => {
+            "OILK" | "OIL" => {
                 return OILK;
             }
             "KT&G" => return KT_G,
 
+            "SAMSUNG" => return Samsung,
             _ => {
                 panic!("err line 44, str : {:?}", str);
             }
@@ -71,6 +73,9 @@ impl EStock {
             KT_G => {
                 return String::from("KT&G");
             }
+            Samsung => {
+                return String::from("Samsung");
+            }
         }
     }
 
@@ -91,12 +96,15 @@ impl EStock {
             KT_G => {
                 return "033780";
             }
+            Samsung => {
+                return "005930";
+            }
         }
     }
 
     fn get_sNaverDomestic(&self) -> &str {
         match self {
-            KT_G => return "domestic",
+            KT_G | Samsung => return "domestic",
 
             BTC | NASDAQ | TMF | OILK => {
                 return "foreign";

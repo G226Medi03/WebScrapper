@@ -64,8 +64,14 @@ impl WeatherGoKr_WebScraper {
         }
     }
     pub async fn Get_Weathers_Json(area: EArea) -> serde_json::Value {
+        let now = chrono::Local::now();
         let mut arr: Vec<Value> = Vec::with_capacity(16);
         for weather in Self::Get_Weathers(area).await {
+            println!("{:#?} : {:#?}", now.day(), weather.Get_todayDate());
+
+            if now.day() != 1 && weather.Get_todayDate() < now.day() as i8 {
+                continue;
+            }
             let mut _json = weather.Into_Json();
             Self::add_Json_Description(&mut _json);
             arr.push(_json);

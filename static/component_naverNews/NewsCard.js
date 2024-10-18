@@ -11,9 +11,8 @@ class NewsCard extends HTMLElement {
                     <div class="ML_5" style="width: 150px;">${title}</div>
                 </div>`;
     }
-    getStyle() {
-        const style = document.createElement("style");
-        style.textContent = `
+    getCss() {
+        const style = `
             .NewsCard:hover {
                 background-color: lightgray;
             }`;
@@ -25,7 +24,7 @@ class NewsCard extends HTMLElement {
         const template = document.createElement("template");
         template.innerHTML = `
         <style>
-            ${this.getStyle().textContent}
+            ${this.getCss()}
         </style>
         ${this.getHtml()}`;
 
@@ -33,6 +32,6 @@ class NewsCard extends HTMLElement {
     }
 }
 
-export async function Define() {
+export default async function Define() {
     window.customElements.define("news-card", NewsCard);
 }

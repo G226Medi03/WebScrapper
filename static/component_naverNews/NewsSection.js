@@ -18,11 +18,8 @@ class NewsSection extends HTMLElement {
                     </div>
                 </div>`;
     }
-    getStyle() {
-        const style = document.createElement("style");
-        style.textContent = `
-
-        `;
+    getCss() {
+        const style = ``;
 
         return style;
     }
@@ -31,7 +28,7 @@ class NewsSection extends HTMLElement {
         const template = document.createElement("template");
         template.innerHTML = `
         <style>
-            ${this.getStyle().textContent}
+            ${this.getCss()}
         </style>
         ${this.getHtml()}`;
 
@@ -40,6 +37,6 @@ class NewsSection extends HTMLElement {
 }
 
 
-export async function Define() {
+export default async function Define() {
     window.customElements.define("news-section", NewsSection);
 }
