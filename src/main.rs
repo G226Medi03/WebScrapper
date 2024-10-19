@@ -11,7 +11,8 @@ mod _File;
 /// 241019 : 2,867 Lines
 #[tokio::main]
 async fn main() {
-    server_run().await.unwrap();
+    // server_run().await.unwrap();
+    _File::PrintLinesOfCode();
 }
 
 // fn StringToTime(sTime: &str) -> NaiveDateTime {}
