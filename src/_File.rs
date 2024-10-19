@@ -3,28 +3,37 @@ use std::{
     io::{BufRead, BufReader},
     path::PathBuf,
 };
-pub static mut LINECOUNT: usize = 0;
-
-pub fn GetCurDirPath() -> PathBuf {
+static mut LINECOUNT: usize = 0;
+fn GetCurDirPath() -> PathBuf {
     let path = std::env::current_dir().unwrap();
     return path;
 }
 
-pub fn printLinesOfRustFiles() {
+pub fn PrintLinesOfCode() {
+    println!("{}", GetLinesOfCode());
+}
+pub fn GetLinesOfCode() -> usize {
+    let rustFilesLineCount = getLinesOfFiles("src");
+    let staticFilesLineCount = getLinesOfFiles("static");
+
+    return rustFilesLineCount + staticFilesLineCount;
+}
+fn getLinesOfFiles(folderName: &str) -> usize {
     let curPath = GetCurDirPath();
 
     for entry in std::fs::read_dir(curPath).unwrap() {
         let entry: std::fs::DirEntry = entry.unwrap();
 
-        if entry.file_name().to_str().unwrap().contains("static") {
+        if entry.file_name().to_str().unwrap().contains(folderName) {
             let dir1 = std::fs::read_dir(entry.file_name()).unwrap();
             HandleDirectory(dir1);
             break;
         }
     }
-
     unsafe {
-        println!("LineCount : {LINECOUNT}");
+        let ret = LINECOUNT.clone();
+        LINECOUNT = 0;
+        return ret;
     }
 }
 

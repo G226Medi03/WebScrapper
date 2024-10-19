@@ -16,7 +16,7 @@ impl Scraper {
         sStartDate: String,
         sEndDate: String,
     ) -> Vec<StockPrice> {
-        let resp = Self::get_sHtml(&stock.To_Url(&sStartDate, &sEndDate)).await;
+        let resp = Self::get_sHtml(&stock.Get_RequestUrl_NaverFinance(&sStartDate, &sEndDate)).await;
 
         if stock == EStock::NASDAQ {
             let a = 1;

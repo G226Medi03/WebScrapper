@@ -1,6 +1,6 @@
-import _1 from "/static/component_NaverFinance/Logo.js";
-import _2 from "/static/component_InvestingCom/Logo.js";
-import _3 from "/static/component_traidingView/Logo.js";
+import _1 from "/static/component/NaverFinance/Logo.js";
+import _2 from "/static/component/InvestingCom/Logo.js";
+import _3 from "/static/component/TraidingView/Logo.js";
 
 class StockChart extends HTMLElement {
     constructor() {
@@ -14,7 +14,7 @@ class StockChart extends HTMLElement {
 
         const utf8Arr = encodeURIComponent(stock);
 
-        fetch(`/stock?stock=${utf8Arr}`).then(resp => { return resp.text(); }).then(data => {
+        fetch(`/stock/price?stock=${utf8Arr}`).then(resp => { return resp.text(); }).then(data => {
             let stockData = JSON.parse(data)
 
             var data = [{
@@ -62,11 +62,23 @@ class StockChart extends HTMLElement {
         })
     }
 
+    getLink(stock) {
+        const encodedStock = encodeURIComponent(stock);
+        let resp = fetch(`/stock/link?stock=${encodedStock}`)
+            .then(resp =>
+                resp.text()
+            )
+            .then(resp => JSON.parse(resp))
+        return resp;
+    }
     getHtml() {
+
         let stock = this.getAttribute("stock") || "NULL";
-        let investingLink = this.getAttribute("investingLink") || "";
-        let naverfinanceLink = this.getAttribute("naverfinanceLink") || "";
-        let traidingviewLink = this.getAttribute("traidingviewLink") || "";
+
+        let links = this.getLink(stock);
+        let investingLink = links["investing"];
+        let naverfinanceLink = links["naverfinance"];
+        let traidingviewLink = links["traidingview"];
         let canvasWidth = this.getAttribute("canvasWidth") || "340px";
         let canvasHeight = this.getAttribute("canvasHeight") || "250px";
         let linkWidth = this.getAttribute("linkWidth") || "100px";
@@ -126,7 +138,7 @@ class StockChart extends HTMLElement {
     }
 }
 
-export default async function Define() {
+export default function Define() {
     window.customElements.define("stock-chart", StockChart);
 }
 

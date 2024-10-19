@@ -4,7 +4,7 @@ class WeatherCard extends HTMLElement {
   }
 
   convert_weather2ImgSrc(weather) {
-    let src = `src="./static/component_weatherGoKr/png/${this.getAttribute("weather")}.png"`;
+    let src = `src="./static/component/WeatherGoKr/png/${this.getAttribute("weather")}.png"`;
 
     if (weather == "-") {
       return "-"

@@ -1,4 +1,5 @@
 use actix_web::web::Bytes;
+use rusqlite::types::Value;
 use EStock::*;
 
 #[allow(non_camel_case_types)]
@@ -14,11 +15,11 @@ pub enum EStock {
 
 impl EStock {
     /// startDate and endDate should have format like "20230728"
-    pub fn To_Url(&self, startDate: &str, endDate: &str) -> String {
+    pub fn Get_RequestUrl_NaverFinance(&self, startDate: &str, endDate: &str) -> String {
         let url = format!(
             "https://api.stock.naver.com/chart/{}/item/{}/day?startDateTime={}&endDateTime={}",
-            self.get_sNaverDomestic(),
-            self.to_NaverStockTicker(),
+            self.get_sNaverFinanceDomestic(),
+            self.Get_NaverStockTicker(),
             startDate,
             endDate
         );
@@ -48,14 +49,6 @@ impl EStock {
         }
     }
 
-    // pub fn From_UTF8(byte : &[u8]) -> Self {
-    //     match byte {
-    //         &[75, 84, 95, 71] => {
-    //             return KT_G;
-    //         }
-    //     }
-    // }
-
     pub fn To_String(&self) -> String {
         match self {
             BTC => {
@@ -79,7 +72,7 @@ impl EStock {
         }
     }
 
-    fn to_NaverStockTicker(&self) -> &str {
+    fn Get_NaverStockTicker(&self) -> &str {
         match self {
             BTC => {
                 return "IBIT.O";
@@ -102,7 +95,7 @@ impl EStock {
         }
     }
 
-    fn get_sNaverDomestic(&self) -> &str {
+    fn get_sNaverFinanceDomestic(&self) -> &str {
         match self {
             KT_G | Samsung => return "domestic",
 
@@ -110,5 +103,78 @@ impl EStock {
                 return "foreign";
             }
         }
+    }
+
+    pub fn Get_ChartUrl_TraidingView(&self) -> &str {
+        match self {
+            NASDAQ => return "https://kr.tradingview.com/chart/?symbol=NASDAQ%3AQQQ",
+            TMF => {
+                return "https://www.tradingview.com/chart/?symbol=AMEX%3ATMF";
+            }
+            BTC => {
+                return "https://www.tradingview.com/chart/?symbol=NASDAQ%3AIBIT";
+            }
+            OILK => {
+                return "https://www.tradingview.com/chart/?symbol=AMEX%3AOILK";
+            }
+            KT_G => {
+                return "https://www.tradingview.com/chart/?symbol=KRX%3A033780";
+            }
+            Samsung => {
+                return "https://www.tradingview.com/chart/?symbol=SAMSUNG";
+            }
+        }
+    }
+
+    pub fn Get_ChartUrl_NaverFinance(&self) -> &str {
+        match self {
+            NASDAQ => return "https://m.stock.naver.com/fchart/foreign/stock/QQQ.O",
+            TMF => {
+                return "https://m.stock.naver.com/fchart/foreign/stock/TMF";
+            }
+            BTC => {
+                return "https://m.stock.naver.com/fchart/foreign/stock/IBIT.O";
+            }
+            OILK => {
+                return "https://m.stock.naver.com/fchart/foreign/stock/OILK.K";
+            }
+            KT_G => {
+                return "https://m.stock.naver.com/fchart/domestic/stock/033780";
+            }
+            Samsung => {
+                return "https://m.stock.naver.com/fchart/domestic/stock/005930";
+            }
+        }
+    }
+
+    pub fn Get_ChartUrl_InvestingCom(&self) -> &str {
+        match self {
+            NASDAQ => return "https://kr.investing.com/etfs/powershares-qqqq-chart",
+            TMF => {
+                return "https://kr.investing.com/etfs/direxion-30-yr-tr.-bull-3x-shrs-chart";
+            }
+            BTC => {
+                return "https://kr.investing.com/etfs/ibit-nasdaq-chart";
+            }
+            OILK => {
+                return "https://kr.investing.com/etfs/proshares-k1-free-crd-oil-strat-chart";
+            }
+            KT_G => {
+                return "https://kr.investing.com/equities/kt-g-corp-chart";
+            }
+            Samsung => {
+                return "https://kr.investing.com/equities/samsung-electronics-co-ltd-chart";
+            }
+        }
+    }
+
+    pub fn Get_ChartUrl_All_Json(&self) -> serde_json::Value {
+        let json = serde_json::json!({
+            "naverfinance" : self.Get_ChartUrl_NaverFinance(),
+            "investing" : self.Get_ChartUrl_InvestingCom(),
+            "traidingview" : self.Get_ChartUrl_TraidingView(),
+        });
+
+        return json;
     }
 }
