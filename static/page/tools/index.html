@@ -1,0 +1,72 @@
+<html class="mac sac" style="width: 100%;">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/component.css" />
+  <script src="/static/component.js">
+  </script>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .menuItem {
+      font-size: 32px;
+      border-radius: 5px;
+      margin: 10px;
+      padding-bottom: 10px;
+      padding-top: 5px;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    .menuItem:hover {
+      background-color: #EEEEEE;
+
+    }
+
+    .menuItem.Selected {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    .menuItem.Selected::after {
+      background-color: blue;
+
+
+      height: 1px;
+      width: calc(100% + 40px);
+      position: relative;
+      top: 10px;
+      content: "";
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w_100 wfc mac sac">
+    <div class="mac sac" style="width: 1000px;">
+      <div class="Row">
+        <div class="menuItem mac sac Selected NoEnter">
+          Daily Report
+        </div>
+        <div class="menuItem  mac sac">
+          Tools
+        </div>
+      </div>
+      <weather-container></weather-container>
+      <stock-container></stock-container>
+      <news-container></news-container>
+      <a href="http://127.0.0.1:40000/youtube/audio?url=https://www.youtube.com/watch?v=DZPHg8f8zdc">
+        asdf
+      </a>
+    </div>
+  </div>
+</body>
+
+
+<script type="module">
+  import "/static/page/dailyReport/component/container/NewsContainer.js";
+  import "/static/page/dailyReport/component/container/WeatherContainer.js";
+  import "/static/page/dailyReport/component/container/StockContainer.js";
+</script>
+
+</html>

@@ -1,12 +1,16 @@
-import _5 from "/static/page/index/component/StockChart.js"
+import "/static/page/dailyReport/component/StockChart.js"
+
 class StockContainer extends HTMLElement {
     constructor() {
         super();
     }
     getHtml() {
-        return `<span class="MTB_10 FS_30">
-                    Stock Charts
-                </span>
+        return `
+                <div class="mtb_20">
+                    <span class="fs_30">
+                        Stock Charts
+                    </span>
+                </div>
                 <div class="Row O_F" style="padding-left: 25px;">
                     <stock-chart stock="Nasdaq"></stock-chart>
                     <stock-chart stock="TMF"/></stock-chart>
@@ -22,9 +26,6 @@ class StockContainer extends HTMLElement {
         return style;
     }
 
-
-
-
     connectedCallback() {
         const template = document.createElement("template");
         template.innerHTML = `
@@ -35,15 +36,6 @@ class StockContainer extends HTMLElement {
 
         this.appendChild(template.content.cloneNode(true));
     }
-
-
-
 }
 
-export default async function Define() {
-    window.customElements.define("stock-container", StockContainer);
-}
-
-
-
-Define();
+window.customElements.define("stock-container", StockContainer);

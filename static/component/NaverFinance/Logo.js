@@ -68,10 +68,4 @@ class NaverFinanceLogo extends HTMLElement {
     }
 }
 
-export default async function Define() {
-    window.customElements.define("naverfinance-logo", NaverFinanceLogo);
-}
-
-
-
-Define();
+window.customElements.define("naverfinance-logo", NaverFinanceLogo);

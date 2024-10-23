@@ -1,0 +1,15 @@
+.O_F {
+    flex-wrap: wrap;
+}
+
+.O_S {
+    overflow: scroll;
+}
+
+.OX_S {
+    overflow-x: scroll;
+}
+
+.OY_S {
+    overflow-y: scroll;
+}

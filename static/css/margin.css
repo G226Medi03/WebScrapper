@@ -1,0 +1,129 @@
+/* m */
+.m_5 {
+    margin: 5px;
+}
+
+.m_10 {
+    margin: 10px;
+}
+
+.m_15 {
+    margin: 15px;
+}
+
+.m_20 {
+    margin: 20px;
+}
+
+
+/* mt */
+.mt_5 {
+    margin-top: 5px;
+}
+
+.mt_10 {
+    margin-top: 10px;
+}
+
+.mt_15 {
+    margin-top: 15px;
+}
+
+.mt_20 {
+    margin-top: 20px;
+}
+
+/* mb */
+.mb_5 {
+    margin-bottom: 5px;
+}
+
+.mb_10 {
+    margin-bottom: 10px;
+}
+
+.mb_15 {
+    margin-bottom: 15px;
+}
+
+.mb_20 {
+    margin-bottom: 20px;
+}
+
+/* ml */
+.ml_5 {
+    margin-left: 5px;
+}
+
+.ml_10 {
+    margin-left: 10px;
+}
+
+.ml_15 {
+    margin-left: 15px;
+}
+
+.ml_20 {
+    margin-left: 20px;
+}
+
+/* mr */
+.mr_5 {
+    margin-left: 5px;
+}
+
+.mr_10 {
+    margin-left: 10px;
+}
+
+.mr_15 {
+    margin-left: 15px;
+}
+
+.mr_20 {
+    margin-left: 20px;
+}
+
+
+
+/* mtb */
+.mtb_5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.mtb_10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mtb_15 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.mtb_20 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* mlr */
+.mlr_5 {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.mlr_10 {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.mlr_15 {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.mlr_20 {
+    margin-right: 20px;
+    margin-left: 20px;
+}

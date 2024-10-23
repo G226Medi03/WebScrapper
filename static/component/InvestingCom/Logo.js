@@ -55,8 +55,4 @@ class InvestingLogo extends HTMLElement {
     }
 }
 
-export default async function Define() {
-    window.customElements.define("investing-logo", InvestingLogo);
-}
-
-Define();
+window.customElements.define("investing-logo", InvestingLogo);

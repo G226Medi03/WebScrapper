@@ -9,8 +9,8 @@ class NewsSection extends HTMLElement {
 
         let innerHtml = this.innerHTML;
         this.innerHTML = "";
-        return `<div class="WFC" style="width : ${width}">
-                    <div class="MAC W100 FS_16 PTB_5" style="background-color: #3F63BF; color: white;">
+        return `<div class="wfc" style="width : ${width}">
+                    <div class="mac w_100 fs_16 PTB_5" style="background-color: #3F63BF; color: white;">
                         ${section}
                     </div>
                     <div style="height : ${height}; overflow-y : scroll;">
@@ -36,7 +36,4 @@ class NewsSection extends HTMLElement {
     }
 }
 
-
-export default async function Define() {
-    window.customElements.define("news-section", NewsSection);
-}
+window.customElements.define("news-section", NewsSection);

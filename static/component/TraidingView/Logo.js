@@ -91,9 +91,4 @@ class TraidingViewLogo extends HTMLElement {
     }
 }
 
-export default async function Define() {
-    window.customElements.define("traidingview-logo", TraidingViewLogo);
-}
-
-
-Define();
+window.customElements.define("traidingview-logo", TraidingViewLogo);

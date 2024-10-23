@@ -3,173 +3,133 @@ class WeatherCard extends HTMLElement {
     super();
   }
 
-  convert_weather2ImgSrc(weather) {
-    let src = `src="./static/component/WeatherGoKr/png/${this.getAttribute("weather")}.png"`;
-
-    if (weather == "-") {
-      return "-"
+  convertWeatherToImgSrc(weather) {
+    if (weather === "-") {
+      return "-";
     }
-    else {
-      return `<image class="W_50 MLR_5" ${src}>
-              </image>`;
-    }
-
+    return `
+      <img class="w_50 mlr_5" 
+           src="./static/component/WeatherGoKr/png/${weather}.png" 
+           alt="${weather} icon">
+    `;
   }
-  getHtml(date, day, description, weather, lowTemp, highTemp, rainPercent) {
-    date = this.getAttribute("date");
-    day = this.getAttribute("day");
-    description = this.getAttribute("description");
-    weather = this.getAttribute("weather");
-    lowTemp = this.getAttribute("lowTemp");
-    highTemp = this.getAttribute("highTemp");
-    rainPercent = this.getAttribute("rainPercent");
 
-    let weatherImageHtml = this.convert_weather2ImgSrc(weather);
-    rainPercent = rainPercent == "null" ? `-` : `${rainPercent}%`;
-    highTemp = highTemp == "null" ? "-" : `${highTemp}℃`;
-    lowTemp = lowTemp == "null" ? "-" : `${lowTemp}℃`;
-    let fontColor;
-    if (day == "토") {
-      fontColor = "#0282DD";
-    } else if (day == "일") {
-      fontColor = "#DB0015";
-    }
+  getHtml() {
+    const date = this.getAttribute("date");
+    const day = this.getAttribute("day");
+    const description = this.getAttribute("description");
+    const weather = this.getAttribute("weather");
+    const lowTemp = this.getAttribute("lowTemp") !== "null" ? `${this.getAttribute("lowTemp")}℃` : "-";
+    const highTemp = this.getAttribute("highTemp") !== "null" ? `${this.getAttribute("highTemp")}℃` : "-";
+    const rainPercent = this.getAttribute("rainPercent") !== "null" ? `${this.getAttribute("rainPercent")}%` : "-";
+
+    const weatherImageHtml = this.convertWeatherToImgSrc(weather);
+    const fontColor = day === "토" ? "#0282DD" : day === "일" ? "#DB0015" : "";
 
     return `
-            <div class="WeatherCard WFC SAC MAC" id="weatherCard" style="width : 110px">
-                <div class="WeatherCard_Head MAC W100" ${fontColor == undefined ? "" : `style="color : ${fontColor}"`
-      }>
-                    <div class="SAC FS_16 H_25 FW_600 PRL_15 ">${date}일(${day})</div>
-                    <div class="MAC SAC FS_14 H_20">${description}</div>
-                </div>
-                <div class="WeatherCard_Body">
-                    
-                    <div class="Row SAC H_50 MAC">
-                        ${weatherImageHtml}
-                    </div>
-                    <div class="BB Row H_30 SAC Temperature">
-                        <span class="W_50 MLR_5">${lowTemp}</span>
-                        <span class="W_50 MLR_5">${highTemp}</span>
-                    </div>
-                    <div class="Row H_20 SAC MAC">
-                        <span class="W_50 MLR_5 MAC">${rainPercent}</span>
-                    </div>
-                </div>
-            </div>`.replaceAll("\n", "");
+      <div class="WeatherCard wfc sac mac" id="weatherCard" style="width: 110px">
+        <div class="WeatherCard_Head mac w_100" style="color: ${fontColor || 'inherit'}">
+          <div class="sac fs_16 h_25 fw_600 PRL_15">${date}일(${day})</div>
+          <div class="mac sac fs_12 h_20">${description}</div>
+        </div>
+        <div class="WeatherCard_Body">
+          <div class="Row sac h_50 mac">
+            ${weatherImageHtml}
+          </div>
+          <div class="BB Row h_30 sac Temperature">
+            <span class="w_50 mlr_5">${lowTemp}</span>
+            <span class="w_50 mlr_5">${highTemp}</span>
+          </div>
+          <div class="Row h_20 sac mac">
+            <span class="w_50 mlr_5 mac">${rainPercent}</span>
+          </div>
+        </div>
+      </div>`;
   }
+
   getCss() {
-    const style = `
-            .WeatherCard_Body {
-              width : 100%;
-              margin-top : 5px;
-              margin-bottom: 5px;
-            }
-            .WeatherCard {
-                background-color: white;
-                position: relative;
+    return `
+      .WeatherCard_Body {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .WeatherCard {
+        background-color: white;
+        position: relative;
+        border-right: 1px solid transparent;
+        border-left: 1px solid transparent;
+        transition: all 0.1s;
+      }
+      .WeatherCard::before {
+        background-color: transparent;
+        height: 2px;
+        width: calc(100% + 2px);
+        position: relative;
+        content: "";
+        transition: all 0.1s;
+      }
+      .WeatherCard>.WeatherCard_Head {
+        background-color: #DCE1E9;
+        border: 1px solid rgb(197, 207, 219);
+        position: relative;
+        top: -2px;
+        transition: all 0.1s;
+      }
+      .WeatherCard>.WeatherCard_Body>.BB {
+        border-bottom: 1px solid #C9D9EF;
+        transition: all 0.1s;
+      }
+      .WeatherCard_Body>.Temperature>span:first-child {
+        color: #0083DD;
+      }
+      .WeatherCard_Body>.Temperature>span:last-child {
+        color: #DB0015;
+      }
+      .WeatherCard.Hovered, .WeatherCard.Selected {
+        border-right: 1px solid rgb(197, 207, 219);
+        border-left: 1px solid rgb(197, 207, 219);
+        transition: all 0.1s;
+      }
+      .WeatherCard.Hovered::before, .WeatherCard.Selected::before {
+        background-color: #2CABD0;
+        height: 2px;
+        width: calc(100% + 2px);
+        position: relative;
+        content: "";
+        transition: all 0.1s;
+      }
+      .WeatherCard.Hovered>.WeatherCard_Head, .WeatherCard.Selected>.WeatherCard_Head {
+        background-color: transparent;
+        border: 1px solid transparent;
+        position: relative;
+        top: -2px;
+        transition: all 0.1s;
+      }
+      .WeatherCard.Hovered>.WeatherCard_Body>.BB, .WeatherCard.Selected>.WeatherCard_Body>.BB {
+        border-bottom: 1px solid #E4E4E4;
+        transition: all 0.1s;
+      }
+    `;
+  }
 
-                border-right: 1px solid transparent;
-                border-left: 1px solid transparent;
-                transition: all 0.1s;
-            }
-            .WeatherCard::before {
-                background-color: transparent;
-                height: 2px;
-                width: calc(100% + 2px);
-
-                position: relative;
-                content: "";
-
-                transition: all 0.1s;
-            }
-            .WeatherCard>.WeatherCard_Head {
-                background-color: #DCE1E9;
-
-                border: 1px solid rgb(197, 207, 219);
-
-                position: relative;
-                top: -2px;
-
-                transition: all 0.1s;
-            } 
-            .WeatherCard>.WeatherCard_Body>.BB {
-                border-bottom: 1px solid #C9D9EF;
-                transition: all 0.1s;
-            }
-            .WeatherCard_Body>.Temperature>span:first-child {
-                color: #0083DD;
-            }
-            .WeatherCard_Body>.Temperature>span:last-child {
-                color: #DB0015;
-            }
-            .Hovered, .Selected{
-                border-right: 1px solid rgb(197, 207, 219);
-                border-left: 1px solid rgb(197, 207, 219);
-
-                transition: all 0.1s;
-            }
-            .Hovered::before, .Selected::before {
-                background-color: #2CABD0;
-                height: 2px;
-                width: calc(100% + 2px);
-
-                position: relative;
-                content: "";
-
-                transition: all 0.1s;
-            }
-            .Hovered>.WeatherCard_Head, .Selected>.WeatherCard_Head {
-                background-color: transparent;
-
-                border: 1px solid transparent;
-
-                position: relative;
-                top: -2px;
-
-                transition: all 0.1s;
-            }
-            .Hovered>.WeatherCard_Body>.BB, .Selected>.WeatherCard_Body>.BB {
-                border-bottom: 1px solid #E4E4E4;
-                transition: all 0.1s;
-            }`;
-
-    return style;
+  addEventListeners(card) {
+    card.addEventListener("mouseenter", () => card.classList.add("Hovered"));
+    card.addEventListener("mouseleave", () => card.classList.remove("Hovered"));
+    card.addEventListener("click", () => card.classList.toggle("Selected"));
   }
 
   connectedCallback() {
     const template = document.createElement("template");
     template.innerHTML = `
-            <style>
-                ${this.getCss()}
-            </style>
-            ${this.getHtml()}`;
+      <style>${this.getCss()}</style>
+      ${this.getHtml()}`;
 
     this.appendChild(template.content.cloneNode(true));
-    let weatherCardChild = this.querySelector("div");
-    weatherCardChild.addEventListener("mouseenter", (e) => {
-      if (!weatherCardChild.classList.contains("Hovered")) {
-        weatherCardChild.classList.add("Hovered");
-      }
-    });
-
-    weatherCardChild.addEventListener("mouseleave", (e) => {
-      weatherCardChild.classList.remove("Hovered");
-    });
-    weatherCardChild.addEventListener("click", (e) => {
-      if (!weatherCardChild.classList.contains("Selected")) {
-        weatherCardChild.classList.add("Selected");
-      } else {
-        weatherCardChild.classList.remove("Selected");
-      }
-    });
+    const weatherCard = this.querySelector("#weatherCard");
+    this.addEventListeners(weatherCard);
   }
 }
 
+window.customElements.define("weather-card", WeatherCard);
 
-export default function Define() {
-  window.customElements.define("weather-card", WeatherCard);
-
-}
-
-
-Define();

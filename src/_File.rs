@@ -15,8 +15,9 @@ pub fn PrintLinesOfCode() {
 pub fn GetLinesOfCode() -> usize {
     let rustFilesLineCount = getLinesOfFiles("src");
     let staticFilesLineCount = getLinesOfFiles("static");
+    let pytohnFilesLineCount = getLinesOfFiles("python");
 
-    return rustFilesLineCount + staticFilesLineCount;
+    return rustFilesLineCount + staticFilesLineCount + pytohnFilesLineCount;
 }
 fn getLinesOfFiles(folderName: &str) -> usize {
     let curPath = GetCurDirPath();
