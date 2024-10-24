@@ -6,12 +6,12 @@ class StockContainer extends HTMLElement {
     }
     getHtml() {
         return `
-                <div class="mtb_20">
-                    <span class="fs_30">
+                <div class="mtb_20 fs_32">
+                    <span class="fs_32">
                         Stock Charts
                     </span>
                 </div>
-                <div class="Row O_F" style="padding-left: 25px;">
+                <div class="Row O_F mac" style="padding-left: 25px; gap : 0px 20px;">
                     <stock-chart stock="Nasdaq"></stock-chart>
                     <stock-chart stock="TMF"/></stock-chart>
                     <stock-chart stock="BTC"></stock-chart>

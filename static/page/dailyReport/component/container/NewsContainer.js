@@ -32,7 +32,7 @@ class NewsContainer extends HTMLElement {
     getHtml() {
         return `
             <div class="mb_15">
-                <span class="fs_30">News</span>
+                <span class="fs_32">News</span>
             </div>
             <div class="Row newsContainer mac O_F"></div>`;
     }

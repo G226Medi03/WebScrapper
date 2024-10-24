@@ -47,7 +47,7 @@ class WeatherContainer extends HTMLElement {
     getHtml() {
         return `
                 <div class="WeatherCardHead MTB_20">
-                    <span class="fs_30">
+                    <span class="fs_32">
                         Weather
                     </span>
                 </div>

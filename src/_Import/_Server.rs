@@ -1,15 +1,19 @@
 #![allow(non_snake_case)]
 
-use std::io::{Read, Write};
+use std::{
+    io::{Read, Write},
+    process::Child,
+};
 
 use crate::_Import::*;
 
 use actix_files::{Files, NamedFile};
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, http::header::map::Iter, App, HttpResponse, HttpServer, Responder};
 
 use _StockApis::LocalApi as StockApi;
-use chrono::{DateTime, Local, NaiveDate, NaiveDateTime};
+use chrono::{format, DateTime, Local, NaiveDate, NaiveDateTime};
 use reqwest::header::HeaderValue;
+use std::process::Command;
 
 #[derive(serde::Deserialize)]
 struct StockQuery {
@@ -59,21 +63,38 @@ async fn api_yotubeAudio(
     req: actix_web::HttpRequest,
     query: actix_web::web::Query<YoutubeAudioQuery>,
 ) -> impl Responder {
-    fn getTitle(resp: &reqwest::Response) -> String {
-        let header = resp.headers();
-        let contentDisposition = header.get("content-disposition").unwrap();
-        let _s = contentDisposition.to_str().unwrap().to_owned();
-        let vec: Vec<&str> = _s.split("filename*=utf-8''").collect();
-        let title = percent_encoding::percent_decode_str(vec[1]).decode_utf8_lossy();
-        return title.to_string();
+    async fn getTitle() -> String {
+        let url = format!("http://127.0.0.1:40001/filename");
+        let resp = reqwest::get(&url).await.unwrap().text().await.unwrap();
+        if resp == "\"\"" {
+            return String::from("Unknown.mp3");
+        }
+        return resp.replace("\"", "");
     }
-    let url = format!("http://127.0.0.1:40001/?url={}", &query.url);
 
+    fn removeUnnecessaryInfo(inputUrl: &mut String) {
+        if inputUrl.contains("&list=") {
+            let splited: &Vec<&str> = &inputUrl.split("&list=").collect();
+            *inputUrl = splited[0].to_string();
+        }
+        if inputUrl.contains("&t=") {
+            let splited: &Vec<&str> = &inputUrl.split("&t=").collect();
+            *inputUrl = splited[0].to_string();
+        }
+        if inputUrl.contains("&start_radio=") {
+            let splited: &Vec<&str> = &inputUrl.split("&start_radio=").collect();
+            *inputUrl = splited[0].to_string();
+        }
+    }
+
+    let mut inputUrl = query.url.clone();
+
+    removeUnnecessaryInfo(&mut inputUrl);
+    let url = format!("http://127.0.0.1:40001/download?url={}", inputUrl);
     let resp = reqwest::get(&url).await.unwrap();
 
-    let title = getTitle(&resp);
+    let title = getTitle().await;
     let path = format!("mp3/{}", title);
-
     let bytes = resp.bytes().await.unwrap();
 
     let mut file = std::fs::OpenOptions::new()
@@ -81,7 +102,7 @@ async fn api_yotubeAudio(
         .write(true)
         .read(true)
         .open(&path)
-        .unwrap();
+        .expect(&format!("path:{:#?}", path));
     file.write_all(&bytes).unwrap();
     file.sync_all().unwrap();
 
@@ -114,9 +135,9 @@ pub async fn server_run() -> std::io::Result<()> {
             .service(api_stockLink)
             .service(api_yotubeAudio)
             // get["/"]
-            .service(Files::new("/dailyReport", "./static/page/dailyReport").index_file("index.html"))
+            .service(Files::new("/", "./static").index_file("index.html"))
 
-            .service(actix_web::web::redirect("/", "/dailyReport"))
+        // .service(actix_web::web::redirect("/", "/dailyReport"))
 
         // .service(page_index)
     })

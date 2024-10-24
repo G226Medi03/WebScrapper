@@ -59,6 +59,18 @@ class MenuItem extends HTMLElement {
         </style>
         ${this.getHtml()}`;
 
+
+        this.addEventListener("click", (e) => { 
+            if (this.classList.contains("Selected")) {
+                this.classList.remove("Selected"); 
+            }
+            else {
+                this.classList.add("Selected");
+            }
+        
+        });
+
+        
         this.appendChild(template.content.cloneNode(true));
     }
 }

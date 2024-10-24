@@ -11,6 +11,6 @@ def downloadYoutubeAudio(url: str) -> str:
         .order_by("abr")
         .last()
     )
-    filename = yt.title.replace(".", "").replace("|", "") + ".mp3"
+    filename = yt.title.replace(".", "").replace("|", "").replace("/", "").replace("\\", "") + ".mp3"
     elem.download(filename=filename, output_path=f"./mp3")
     return filename
